@@ -69,8 +69,8 @@
 
 /obj/structure/proc/climb_on()
 
-	set name = "Climb structure"
-	set desc = "Climbs onto a structure."
+	set name = "Піднятися на споруду"
+	set desc = "Піднятися на споруду. Займе деякий час."
 	set category = "Object"
 	set src in oview(1)
 
@@ -161,7 +161,7 @@
 			var/damage = rand(15,30)
 			var/mob/living/carbon/human/H = M
 			if(!istype(H))
-				to_chat(H, SPAN_DANGER("You land heavily!"))
+				to_chat(H, SPAN_DANGER("Ви з гуркотом впали!"))
 				M.apply_damage(damage, BRUTE)
 				return
 
@@ -180,12 +180,12 @@
 					affecting = H.get_limb("head")
 
 			if(affecting)
-				to_chat(M, SPAN_DANGER("You land heavily on your [affecting.display_name]!"))
+				to_chat(M, SPAN_DANGER("Ви жорстко падаєте на [affecting.display_name]!"))
 				affecting.take_damage(damage, 0)
 				if(affecting.parent)
 					affecting.parent.add_autopsy_data("Misadventure", damage)
 			else
-				to_chat(H, SPAN_DANGER("You land heavily!"))
+				to_chat(H, SPAN_DANGER("Ви з гуркотом впали!"))
 				H.apply_damage(damage, BRUTE)
 
 			H.UpdateDamageIcon()
@@ -198,12 +198,12 @@
 	if(!Adjacent(user) || !isturf(user.loc))
 		return 0
 	if(user.is_mob_restrained() || user.buckled)
-		to_chat(user, SPAN_NOTICE("You need your hands and legs free for this."))
+		to_chat(user, SPAN_NOTICE("Для цього ваші руки і ноги повинні бути вільні."))
 		return 0
 	if(user.is_mob_incapacitated(TRUE) || user.body_position == LYING_DOWN)
 		return 0
 	if(isRemoteControlling(user))
-		to_chat(user, SPAN_NOTICE("You need hands for this."))
+		to_chat(user, SPAN_NOTICE("Для цього вам потрібні руки."))
 		return 0
 	return 1
 

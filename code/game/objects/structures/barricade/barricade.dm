@@ -200,7 +200,7 @@
 
 	for(var/obj/effect/xenomorph/acid/acid in src.loc)
 		if(acid.acid_t == src)
-			to_chat(user, "You can't get near that, it's melting!")
+			to_chat(user, "Ви не можете наблизитись через кислоту!")
 			return
 
 	if(istype(item, /obj/item/stack/barbed_wire))
@@ -399,14 +399,14 @@
 	return TRUE
 
 /obj/structure/barricade/verb/count_rotate()
-	set name = "Rotate Barricade Counter-Clockwise"
+	set name = "Повернути барикаду проти годинникової стрілки"
 	set category = "Object"
 	set src in oview(1)
 
 	rotate(usr,1)
 
 /obj/structure/barricade/verb/clock_rotate()
-	set name = "Rotate Barricade Clockwise"
+	set name = "Повернути барикаду за годинниковою стрілкою"
 	set category = "Object"
 	set src in oview(1)
 
@@ -417,7 +417,7 @@
 		return
 
 	if(anchored)
-		to_chat(usr, SPAN_WARNING("It is fastened to the floor, you can't rotate it!"))
+		to_chat(usr, SPAN_WARNING("Барикада прикріплена до підлоги, її не вдається повернути!"))
 		return
 
 	user.next_move = world.time + 3 //slight spam prevention? you don't want every metal cade to turn into a doorway
@@ -438,7 +438,7 @@
 	var/obj/item/weapon/gun/smg/nailgun/nailgun = item
 
 	if(!nailgun.in_chamber || !nailgun.current_mag || nailgun.current_mag.current_rounds < 3)
-		to_chat(user, SPAN_WARNING("You require at least 4 nails to complete this task!"))
+		to_chat(user, SPAN_WARNING("Вам знадобиться щонайменше 4 цвяхи щоб виконати цю дію!"))
 		return FALSE
 
 	// Check if either hand has a metal stack by checking the weapon offhand
@@ -450,7 +450,7 @@
 		material = user.l_hand
 
 	if(!istype(material, /obj/item/stack/sheet/))
-		to_chat(user, SPAN_WARNING("You'll need some adequate repair material in your other hand to patch up [src]!"))
+		to_chat(user, SPAN_WARNING("Необхідно мати відповідний ремонтний матеріал в іншій руці, щоб залатати [src]!"))
 		return FALSE
 
 	var/repair_value = 0
@@ -460,7 +460,7 @@
 			break
 
 	if(repair_value == 0)
-		to_chat(user, SPAN_WARNING("You'll need some adequate repair material in your other hand to patch up [src]!"))
+		to_chat(user, SPAN_WARNING("Необхідно мати відповідний ремонтний матеріал в іншій руці, щоб залатати [src]!"))
 		return FALSE
 
 	var/soundchannel = playsound(src, nailgun.repair_sound, 25, 1)
@@ -473,11 +473,11 @@
 		return FALSE
 
 	if(!nailgun.in_chamber || !nailgun.current_mag || nailgun.current_mag.current_rounds < 3)
-		to_chat(user, SPAN_WARNING("You require at least 4 nails to complete this task!"))
+		to_chat(user, SPAN_WARNING("Вам знадобиться щонайменше 4 цвяхи щоб виконати цю дію!"))
 		return FALSE
 
 	update_health(-repair_value*maxhealth)
-	to_chat(user, SPAN_WARNING("You nail [material] to [src], restoring some of its integrity!"))
+	to_chat(user, SPAN_WARNING("Ви прибили [material], тим самим [src] стала більш міцною!"))
 	update_damage_state()
 	material.use(1)
 	nailgun.current_mag.current_rounds -= 3
@@ -496,17 +496,17 @@
 
 	if(!HAS_TRAIT(item, TRAIT_TOOL_BLOWTORCH))
 		if(!silent)
-			to_chat(user, SPAN_WARNING("You need a stronger blowtorch!"))
+			to_chat(user, SPAN_WARNING("Ви потребуєте потужнішого зварювального апарату!"))
 		return FALSE
 
 	if(health == maxhealth)
 		if(!silent)
-			to_chat(user, SPAN_WARNING("[src] doesn't need repairs."))
+			to_chat(user, SPAN_WARNING("[src] не потребує ремонту."))
 		return FALSE
 
 	if(!(isnull(damage_state)) && !(isnull(welder_lower_damage_limit)) && damage_state >= welder_lower_damage_limit)
 		if(!silent)
-			to_chat(user, SPAN_WARNING("[src] has sustained too much structural damage to be repaired."))
+			to_chat(user, SPAN_WARNING("[src] настільки пошкоджена що непідлягає відновленню."))
 		return FALSE
 
 	return TRUE
